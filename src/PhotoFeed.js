@@ -8,7 +8,7 @@ export default class PhotoFeed extends PureComponent {
 
     return (
       <div className="App-body">
-        <Row gutter={16}>
+        <Row gutter={40}>
           {posts.map((post, i) => (
             <Col key={`col_${post.id}`} span={8}>
               <Photo i={i} {...post} onLikeIncrement={onLikeIncrement} />

@@ -19,7 +19,6 @@ export default class Photo extends PureComponent {
     return (
       <Card
         hoverable
-        style={{ width: 300 }}
         cover={<img alt="example" src={imgSrc} />}
         actions={[
           <b>
@@ -30,7 +29,7 @@ export default class Photo extends PureComponent {
           </span>
         ]}
       >
-        <Link to={`/feed/2/${id}`}>
+        <Link to={`/${id}`}>
           <Meta description={caption} />
         </Link>
       </Card>

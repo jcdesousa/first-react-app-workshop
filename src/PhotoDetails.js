@@ -1,43 +1,29 @@
 import React, { PureComponent } from "react";
-import { Comment, Avatar, Form, Button, List, Input } from "antd";
+import { Comment, Avatar } from "antd";
 import moment from "moment";
 import { Col, Row } from "antd";
-
-const TextArea = Input.TextArea;
-
-const CommentList = ({ comments }) => (
-  <List
-    dataSource={comments}
-    header={`${comments.length} ${comments.length > 1 ? "replies" : "reply"}`}
-    itemLayout="horizontal"
-    renderItem={props => <Comment {...props} />}
-  />
-);
-
-const Editor = ({ onChange, onSubmit, submitting, value }) => (
-  <div>
-    <Form.Item>
-      <TextArea rows={4} onChange={onChange} value={value} />
-    </Form.Item>
-    <Form.Item>
-      <Button
-        htmlType="submit"
-        loading={submitting}
-        onClick={onSubmit}
-        type="primary"
-      >
-        Add Comment
-      </Button>
-    </Form.Item>
-  </div>
-);
+import posts from "./posts";
+import Photo from "./Photo";
+import CommentList from "./ComentList";
+import CommentForm from "./ComentForm";
 
 export default class PhotoDetails extends PureComponent {
   state = {
+    post: {},
     comments: [],
     submitting: false,
     value: ""
   };
+
+  componentDidMount() {
+    const { params } = this.props.match;
+
+    const post = posts.find(post => post.id === params.postId);
+
+    this.setState({
+      post
+    });
+  }
 
   handleSubmit = () => {
     if (!this.state.value) {
@@ -72,17 +58,24 @@ export default class PhotoDetails extends PureComponent {
     });
   };
 
+  _renderCommentList = () => {
+    const { comments } = this.state;
+
+    return comments.length > 0 && <CommentList comments={comments} />;
+  };
+
   render() {
-    const { comments, submitting, value } = this.state;
+    const { submitting, value, post } = this.state;
 
     return (
       <div>
-        <Row gutter={16}>
-          <Col key={`image_col`} span={8}>
-            
+        <Row gutter={40}>
+          <Col key={`image_col`} span={10}>
+            <Photo {...post} />
           </Col>
-          <Col key={`image_col`} span={8}>
-            {comments.length > 0 && <CommentList comments={comments} />}
+          <Col key={`comments_col`} span={14}>
+           { this._renderCommentList() }
+
             <Comment
               avatar={
                 <Avatar
@@ -91,7 +84,7 @@ export default class PhotoDetails extends PureComponent {
                 />
               }
               content={
-                <Editor
+                <CommentForm
                   onChange={this.handleChange}
                   onSubmit={this.handleSubmit}
                   submitting={submitting}
