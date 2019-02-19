@@ -6,90 +6,107 @@ import { Col, Row } from "antd";
 import Photo from "../components/Photo";
 import CommentList from "../components/ComentList";
 import CommentForm from "../components/ComentForm";
-import { getState, handleAddComent, handleLikeIncrement } from "../app/store";
+import mockPosts from "../mockPosts";
+import base from "../rebase";
+import { addComent, likeIncrement } from "../utils/rebaseUtils";
 
 export default class PhotoDetailsPage extends PureComponent {
     static propTypes = {
         match: PropTypes.object.isRequired
     }
 
-    constructor(props) {
-        super(props);
+    state = {
+        value: "",
+        posts: [],
+        loading: true
+    };
 
-        this.state = {
-            submitting: false,
-            value: ""
-        };
+    componentDidMount() {
+        this.ref = base.syncState("/posts", {
+            context: this,
+            asArray: true,
+            state: "posts",
+            defaultValue: mockPosts,
+            then: () => {
+                this.setState({ loading: false });
+            }
+        });
     }
 
-    handleSubmit = () => {
+    _onSubmit = () => {
         if (!this.state.value) {
             return;
         }
 
-        this.setState({
-            submitting: true
+        const posts = addComent(this.state.posts, this.props.match.params.postId, {
+            author: "Han Solo",
+            avatar: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
+            content: this.state.value,
+            datetime: moment().fromNow()
         });
 
-        setTimeout(() => {
-            handleAddComent(this.props.match.params.postId, {
-                author: "Han Solo",
-                avatar: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
-                content: <p>{this.state.value}</p>,
-                datetime: moment().fromNow()
-            });
-            this.setState({
-                submitting: false,
-                value: ""
-            });
-        }, 1000);
+        this.setState({
+            value: "",
+            posts
+        });
     };
 
-  handleChange = (e) => {
-      this.setState({
-          value: e.target.value
-      });
-  };
+    _onLikeIncrement = () => {
+        const posts = likeIncrement(this.state.posts, this.props.match.params.postId);
 
-  _renderCommentList = (post) => {
-      const { comments } = post;
+        this.setState({
+            posts
+        });
+    };
 
-      return comments.length > 0 && <CommentList comments={comments} />;
-  };
+    _onCommentChange = (e) => {
+        this.setState({
+            value: e.target.value
+        });
+    };
 
-  render() {
-      const { submitting, value } = this.state;
-      const post = getState().posts.find((postElement) => postElement.id === this.props.match.params.postId);
+    _renderCommentList = (post) => {
+        const { comments } = post;
 
+        return Array.isArray(comments) && comments.length > 0 && <CommentList comments={comments} />;
+    };
 
-      return (
-          <div>
-              <Row gutter={40}>
-                  <Col key={"image_col"} span={10}>
-                      <Photo {...post} onLikeIncrement={handleLikeIncrement} />
-                  </Col>
-                  <Col key={"comments_col"} span={14}>
-                      { this._renderCommentList(post) }
+    render() {
+        const { value, loading } = this.state;
 
-                      <Comment
-                          avatar={(
-                              <Avatar
-                                  src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                                  alt="Han Solo"
-                              />
-                          )}
-                          content={(
-                              <CommentForm
-                                  onChange={this.handleChange}
-                                  onSubmit={this.handleSubmit}
-                                  submitting={submitting}
-                                  value={value}
-                              />
-                          )}
-                      />
-                  </Col>
-              </Row>
-          </div>
-      );
-  }
+        if (loading) {
+            return "Loading...";
+        }
+
+        const post = this.state.posts.find((postElement) => postElement.id === this.props.match.params.postId);
+
+        return (
+            <div>
+                <Row gutter={40}>
+                    <Col key={"image_col"} span={10}>
+                        <Photo {...post} onLikeIncrement={this._onLikeIncrement} />
+                    </Col>
+                    <Col key={"comments_col"} span={14}>
+                        { this._renderCommentList(post) }
+
+                        <Comment
+                            avatar={(
+                                <Avatar
+                                    src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                                    alt="Han Solo"
+                                />
+                            )}
+                            content={(
+                                <CommentForm
+                                    onChange={this._onCommentChange}
+                                    onSubmit={this._onSubmit}
+                                    value={value}
+                                />
+                            )}
+                        />
+                    </Col>
+                </Row>
+            </div>
+        );
+    }
 }

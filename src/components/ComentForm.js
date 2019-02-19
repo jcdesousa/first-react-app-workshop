@@ -7,11 +7,10 @@ const TextArea = Input.TextArea;
 const propTypes = {
     onChange: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
-    submitting: PropTypes.bool.isRequired,
     value: PropTypes.string.isRequired
 };
 
-const CommentForm = ({ onChange, onSubmit, submitting, value }) => (
+const CommentForm = ({ onChange, onSubmit, value }) => (
     <div>
         <Form.Item>
             <TextArea rows={4} onChange={onChange} value={value} />
@@ -19,7 +18,6 @@ const CommentForm = ({ onChange, onSubmit, submitting, value }) => (
         <Form.Item>
             <Button
                 htmlType="submit"
-                loading={submitting}
                 onClick={onSubmit}
                 type="primary"
             >

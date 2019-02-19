@@ -12,7 +12,7 @@ export default class Photo extends PureComponent {
         caption: PropTypes.string.isRequired,
         likes: PropTypes.number.isRequired,
         onLikeIncrement: PropTypes.func.isRequired,
-        comments: PropTypes.array.isRequired
+        comments: PropTypes.array
     }
 
     _onClickLike = () => {
@@ -25,7 +25,7 @@ export default class Photo extends PureComponent {
             imgSrc,
             caption,
             likes,
-            comments
+            comments = []
         } = this.props;
 
         return (
