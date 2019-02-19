@@ -10,16 +10,21 @@ class App extends Component {
         return (
             <div className="App">
                 <header className="App-header">
-                    <a className="App-link" href="/#">
-              ZAIstagram
-                    </a>
+                    <a className="App-link" href="/#">ZAIstagram</a>
                 </header>
 
                 <div className="App-body">
                     <BrowserRouter>
                         <Switch>
-                            <Route path="/" component={PhotoFeedPage} exact={true} />
-                            <Route path="/:postId" component={PhotoDetailsPage} />
+                            <Route
+                                path="/"
+                                component={PhotoFeedPage}
+                                exact={true}
+                            />
+                            <Route
+                                path="/:postId"
+                                component={PhotoDetailsPage}
+                            />
                             <Route component={NotFound} />
                         </Switch>
                     </BrowserRouter>

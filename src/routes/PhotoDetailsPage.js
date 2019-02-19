@@ -3,22 +3,24 @@ import PropTypes from "prop-types";
 import { Comment, Avatar } from "antd";
 import moment from "moment";
 import { Col, Row } from "antd";
-import posts from "../mockPosts";
 import Photo from "../components/Photo";
 import CommentList from "../components/ComentList";
 import CommentForm from "../components/ComentForm";
+import { getState, handleAddComent, handleLikeIncrement } from "../app/store";
 
 export default class PhotoDetailsPage extends PureComponent {
   static propTypes = {
       match: PropTypes.object.isRequired
   }
 
-  state = {
-      post: posts.find((post) => post.id === this.props.match.params.postId),
-      comments: [],
-      submitting: false,
-      value: ""
-  };
+  constructor(props) {
+      super(props);
+
+      this.state = {
+          submitting: false,
+          value: ""
+      };
+  }
 
   handleSubmit = () => {
       if (!this.state.value) {
@@ -30,19 +32,16 @@ export default class PhotoDetailsPage extends PureComponent {
       });
 
       setTimeout(() => {
+        handleAddComent(this.props.match.params.postId, {
+            author: "Han Solo",
+            avatar:
+    "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
+            content: <p>{this.state.value}</p>,
+            datetime: moment().fromNow()
+        });
           this.setState({
               submitting: false,
-              value: "",
-              comments: [
-                  {
-                      author: "Han Solo",
-                      avatar:
-              "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
-                      content: <p>{this.state.value}</p>,
-                      datetime: moment().fromNow()
-                  },
-                  ...this.state.comments
-              ]
+              value: ""
           });
       }, 1000);
   };
@@ -53,23 +52,25 @@ export default class PhotoDetailsPage extends PureComponent {
       });
   };
 
-  _renderCommentList = () => {
-      const { comments } = this.state;
+  _renderCommentList = (post) => {
+      const { comments } = post;
 
       return comments.length > 0 && <CommentList comments={comments} />;
   };
 
   render() {
-      const { submitting, value, post } = this.state;
+      const { submitting, value } = this.state;
+      const post = getState().posts.find((postElement) => postElement.id === this.props.match.params.postId);
+
 
       return (
           <div>
               <Row gutter={40}>
                   <Col key={"image_col"} span={10}>
-                      <Photo {...post} />
+                      <Photo {...post} onLikeIncrement={handleLikeIncrement} />
                   </Col>
                   <Col key={"comments_col"} span={14}>
-                      { this._renderCommentList() }
+                      { this._renderCommentList(post) }
 
                       <Comment
                           avatar={(

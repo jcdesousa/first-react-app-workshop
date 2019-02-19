@@ -11,13 +11,12 @@ export default class Photo extends PureComponent {
         imgSrc: PropTypes.string.isRequired,
         caption: PropTypes.string.isRequired,
         likes: PropTypes.number.isRequired,
-        i: PropTypes.number.isRequired,
         onLikeIncrement: PropTypes.func.isRequired,
-        comments: PropTypes.object
+        comments: PropTypes.array.isRequired
     }
 
     _onClickLike = () => {
-        this.props.onLikeIncrement(this.props.i);
+        this.props.onLikeIncrement(this.props.id);
     }
 
     render() {
@@ -26,7 +25,7 @@ export default class Photo extends PureComponent {
             imgSrc,
             caption,
             likes,
-            comments = {}
+            comments
         } = this.props;
 
         return (
@@ -38,7 +37,7 @@ export default class Photo extends PureComponent {
                         {likes} <Icon type="heart" onClick={this._onClickLike} />
                     </b>,
                     <span key="comments">
-                        {comments[id] ? comments[id].length : 0} <Icon type="message" />
+                        {comments.length} <Icon type="message" />
                     </span>
                 ]}
             >

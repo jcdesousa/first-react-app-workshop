@@ -15,9 +15,9 @@ class PhotoFeed extends PureComponent {
         return (
             <div className="App-body">
                 <Row gutter={40}>
-                    {posts.map((post, i) => (
+                    {posts.map((post) => (
                         <Col key={`col_${post.id}`} span={8}>
-                            <Photo i={i} {...post} onLikeIncrement={onLikeIncrement} />
+                            <Photo {...post} onLikeIncrement={onLikeIncrement} />
                         </Col>
                     ))}
                 </Row>
