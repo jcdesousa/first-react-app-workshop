@@ -2,10 +2,10 @@ import React, { PureComponent } from "react";
 import { Comment, Avatar } from "antd";
 import moment from "moment";
 import { Col, Row } from "antd";
-import posts from "./posts";
-import Photo from "./Photo";
-import CommentList from "./ComentList";
-import CommentForm from "./ComentForm";
+import posts from "../mockPosts";
+import Photo from "../components/Photo";
+import CommentList from "../components/ComentList";
+import CommentForm from "../components/ComentForm";
 
 export default class PhotoDetails extends PureComponent {
   state = {

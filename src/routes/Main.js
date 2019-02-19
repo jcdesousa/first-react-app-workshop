@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
-import PhotoFeed from "./PhotoFeed";
-import posts from "./posts";
+import PhotoFeed from "../components/PhotoFeed";
+import posts from "../mockPosts";
 export default class Main extends PureComponent {
   state = {
     posts
