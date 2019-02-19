@@ -9,42 +9,41 @@ import CommentForm from "../components/ComentForm";
 import { getState, handleAddComent, handleLikeIncrement } from "../app/store";
 
 export default class PhotoDetailsPage extends PureComponent {
-  static propTypes = {
-      match: PropTypes.object.isRequired
-  }
+    static propTypes = {
+        match: PropTypes.object.isRequired
+    }
 
-  constructor(props) {
-      super(props);
+    constructor(props) {
+        super(props);
 
-      this.state = {
-          submitting: false,
-          value: ""
-      };
-  }
+        this.state = {
+            submitting: false,
+            value: ""
+        };
+    }
 
-  handleSubmit = () => {
-      if (!this.state.value) {
-          return;
-      }
+    handleSubmit = () => {
+        if (!this.state.value) {
+            return;
+        }
 
-      this.setState({
-          submitting: true
-      });
-
-      setTimeout(() => {
-        handleAddComent(this.props.match.params.postId, {
-            author: "Han Solo",
-            avatar:
-    "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
-            content: <p>{this.state.value}</p>,
-            datetime: moment().fromNow()
+        this.setState({
+            submitting: true
         });
-          this.setState({
-              submitting: false,
-              value: ""
-          });
-      }, 1000);
-  };
+
+        setTimeout(() => {
+            handleAddComent(this.props.match.params.postId, {
+                author: "Han Solo",
+                avatar: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
+                content: <p>{this.state.value}</p>,
+                datetime: moment().fromNow()
+            });
+            this.setState({
+                submitting: false,
+                value: ""
+            });
+        }, 1000);
+    };
 
   handleChange = (e) => {
       this.setState({
