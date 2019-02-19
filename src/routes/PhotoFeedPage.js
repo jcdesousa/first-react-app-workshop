@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import PhotoFeed from "../components/PhotoFeed";
-import base from "../rebase";
-import mockPosts from "../mockPosts";
+import base from "../utils/rebase";
+import mockPosts from "../utils/mockPosts";
 import { likeIncrement } from "../utils/rebaseUtils";
 
 export default class PhotoFeedPage extends PureComponent {

@@ -2,13 +2,16 @@ import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { Comment, Avatar } from "antd";
 import moment from "moment";
-import { Col, Row } from "antd";
+import { Col, Row, Spin } from "antd";
 import Photo from "../components/Photo";
 import CommentList from "../components/ComentList";
 import CommentForm from "../components/ComentForm";
-import mockPosts from "../mockPosts";
-import base from "../rebase";
+import mockPosts from "../utils/mockPosts";
+import base from "../utils/rebase";
 import { addComent, likeIncrement } from "../utils/rebaseUtils";
+
+const TEST_USER_NAME = "Han Solo";
+const TEST_USER_AVATAR_URL = "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png";
 
 export default class PhotoDetailsPage extends PureComponent {
     static propTypes = {
@@ -39,8 +42,8 @@ export default class PhotoDetailsPage extends PureComponent {
         }
 
         const posts = addComent(this.state.posts, this.props.match.params.postId, {
-            author: "Han Solo",
-            avatar: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
+            author: TEST_USER_NAME,
+            avatar: TEST_USER_AVATAR_URL,
             content: this.state.value,
             datetime: moment().fromNow()
         });
@@ -75,7 +78,7 @@ export default class PhotoDetailsPage extends PureComponent {
         const { value, loading } = this.state;
 
         if (loading) {
-            return "Loading...";
+            return (<Spin />);
         }
 
         const post = this.state.posts.find((postElement) => postElement.id === this.props.match.params.postId);
@@ -92,8 +95,8 @@ export default class PhotoDetailsPage extends PureComponent {
                         <Comment
                             avatar={(
                                 <Avatar
-                                    src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                                    alt="Han Solo"
+                                    src={TEST_USER_AVATAR_URL}
+                                    alt={TEST_USER_NAME}
                                 />
                             )}
                             content={(
