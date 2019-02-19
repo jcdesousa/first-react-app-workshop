@@ -10,23 +10,25 @@ const propTypes = {
     value: PropTypes.string.isRequired
 };
 
-const CommentForm = ({ onChange, onSubmit, value }) => (
-    <div>
-        <Form.Item>
-            <TextArea rows={4} onChange={onChange} value={value} />
-        </Form.Item>
-        <Form.Item>
-            <Button
-                htmlType="submit"
-                onClick={onSubmit}
-                type="primary"
-            >
-        Add Comment
-            </Button>
-        </Form.Item>
-    </div>
-);
+function CommentForm({ onChange, onSubmit, value }) {
+    return (
+        <div>
+            <Form.Item>
+                <TextArea rows={4} onChange={onChange} value={value} />
+            </Form.Item>
+            <Form.Item>
+                <Button
+                    htmlType="submit"
+                    onClick={onSubmit}
+                    type="primary"
+                >
+            Add Comment
+                </Button>
+            </Form.Item>
+        </div>
+    );
+}
 
 CommentForm.propTypes = propTypes;
 
-export default CommentForm;
+export default React.memo(CommentForm);

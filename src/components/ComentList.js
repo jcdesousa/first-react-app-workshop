@@ -6,15 +6,17 @@ const propTypes = {
     comments: PropTypes.array.isRequired
 };
 
-const CommentList = ({ comments }) => (
-    <List
-        dataSource={comments}
-        header={`${comments.length} ${comments.length > 1 ? "replies" : "reply"}`}
-        itemLayout="horizontal"
-        renderItem={(props) => <Comment {...props} />}
-    />
-);
+function CommentList({ comments }) {
+    return (
+        <List
+            dataSource={comments}
+            header={`${comments.length} ${comments.length > 1 ? "replies" : "reply"}`}
+            itemLayout="horizontal"
+            renderItem={(props) => <Comment {...props} />}
+        />
+    );
+}
 
 CommentList.propTypes = propTypes;
 
-export default CommentList;
+export default React.memo(CommentList);
