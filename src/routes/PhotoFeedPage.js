@@ -4,27 +4,27 @@ import posts from "../mockPosts";
 
 export default class PhotoFeedPage extends PureComponent {
   state = {
-    posts
+      posts
   };
 
-  handleLikeIncrement = index => {
-    const post = this.state.posts[index];
+  handleLikeIncrement = (index) => {
+      const post = this.state.posts[index];
 
-    post.likes = post.likes + 1;
+      post.likes = post.likes + 1;
 
-    this.setState({
-      posts : [
-        ...this.state.posts
-      ]
-    })
+      this.setState({
+          posts: [
+              ...this.state.posts
+          ]
+      });
   }
 
   render() {
-    return (
-      <PhotoFeed
-        posts={this.state.posts}
-        onLikeIncrement={this.handleLikeIncrement}
-      />
-    );
+      return (
+          <PhotoFeed
+              posts={this.state.posts}
+              onLikeIncrement={this.handleLikeIncrement}
+          />
+      );
   }
 }

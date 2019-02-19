@@ -1,38 +1,51 @@
 import React, { PureComponent } from "react";
+import PropTypes from "prop-types";
 import { Card, Icon } from "antd";
 import { Link } from "react-router-dom";
 
 const { Meta } = Card;
 
 export default class Photo extends PureComponent {
-  render() {
-    const {
-      id,
-      imgSrc,
-      caption,
-      likes,
-      comments = {},
-      i,
-      onLikeIncrement
-    } = this.props;
+    static propTypes = {
+        id: PropTypes.string.isRequired,
+        imgSrc: PropTypes.string.isRequired,
+        caption: PropTypes.string.isRequired,
+        likes: PropTypes.number.isRequired,
+        i: PropTypes.number.isRequired,
+        onLikeIncrement: PropTypes.func.isRequired,
+        comments: PropTypes.object
+    }
 
-    return (
-      <Card
-        hoverable
-        cover={<img alt="example" src={imgSrc} />}
-        actions={[
-          <b>
-            {likes} <Icon type="heart" onClick={() => onLikeIncrement(i)} />
-          </b>,
-          <span>
-            {comments[id] ? comments[id].length : 0} <Icon type="message" />
-          </span>
-        ]}
-      >
-        <Link to={`/${id}`}>
-          <Meta description={caption} />
-        </Link>
-      </Card>
-    );
-  }
+    _onClickLike = () => {
+        this.props.onLikeIncrement(this.props.i);
+    }
+
+    render() {
+        const {
+            id,
+            imgSrc,
+            caption,
+            likes,
+            comments = {}
+        } = this.props;
+
+        return (
+            <Card
+                hoverable
+                cover={<img alt="example" src={imgSrc} />}
+                actions={[
+                    <b key="like">
+                        {likes} <Icon type="heart" onClick={this._onClickLike} />
+                    </b>,
+                    <span key="comments">
+                        {comments[id] ? comments[id].length : 0} <Icon type="message" />
+                    </span>
+                ]}
+            >
+                <Link to={`/${id}`}>
+                    <Meta description={caption} />
+                </Link>
+            </Card>
+        );
+    }
 }
