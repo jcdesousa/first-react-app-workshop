@@ -7,7 +7,7 @@ import Photo from "../components/Photo";
 import CommentList from "../components/ComentList";
 import CommentForm from "../components/ComentForm";
 
-export default class PhotoDetails extends PureComponent {
+export default class PhotoDetailsPage extends PureComponent {
   state = {
     post: {},
     comments: [],

@@ -1,7 +1,8 @@
 import React, { PureComponent } from "react";
 import PhotoFeed from "../components/PhotoFeed";
 import posts from "../mockPosts";
-export default class Main extends PureComponent {
+
+export default class PhotoFeedPage extends PureComponent {
   state = {
     posts
   };

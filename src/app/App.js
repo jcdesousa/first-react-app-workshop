@@ -1,15 +1,13 @@
 import React, { Component } from "react";
 import { Route, Switch, BrowserRouter } from "react-router-dom";
-import PhotoDetails from "../routes/PhotoDetails";
-import Main from "../routes/Main";
+import PhotoDetailsPage from "../routes/PhotoDetailsPage";
+import PhotoFeedPage from "../routes/PhotoFeedPage";
 import NotFound from "../routes/NotFound";
 import "./App.css";
-
 
 class App extends Component {
   render() {
     return (
-
         <div className="App">
           <header className="App-header">
             <a className="App-link" href="/#">
@@ -20,8 +18,8 @@ class App extends Component {
           <div className="App-body">
             <BrowserRouter>
               <Switch>
-                <Route path="/" component={Main} exact={true} />
-                <Route path="/:postId" component={PhotoDetails} />
+                <Route path="/" component={PhotoFeedPage} exact={true} />
+                <Route path="/:postId" component={PhotoDetailsPage} />
                 <Route component={NotFound} />
               </Switch>
             </BrowserRouter>
