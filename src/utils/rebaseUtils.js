@@ -1,22 +1,29 @@
-import { union, clone } from "lodash";
+import { union } from "lodash";
 
 export function likeIncrement(posts, postId) {
-    const clonedPosts = clone(posts);
+    return posts.map((post) => {
+        if (post.id === postId) {
+            return {
+                ...post,
+                likes: post.likes + 1
+            };
+        }
 
-    const post = clonedPosts.find(({ id }) => id === postId);
-
-    post.likes = post.likes + 1;
-
-    return clonedPosts;
+        return post;
+    });
 }
 
 export function addComent(posts, postId, commentObject) {
-    const clonedPosts = clone(posts);
+    return posts.map((post) => {
+        if (post.id === postId) {
+            return {
+                ...post,
 
-    const post = clonedPosts.find(({ id }) => id === postId);
+                // It's important to create a new array so that PureComponent knows it needs to re-render
+                comments: union(post.comments, [commentObject])
+            };
+        }
 
-    // It's important to create a new array so that PureComponent knows it needs to re-render
-    post.comments = union(post.comments, [commentObject]);
-
-    return clonedPosts;
+        return post;
+    });
 }
