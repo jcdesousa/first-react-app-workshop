@@ -31,7 +31,7 @@ export default class Photo extends PureComponent {
         return (
             <Card
                 hoverable
-                cover={<img alt="example" src={imgSrc} />}
+                cover={<img alt={id} src={imgSrc} />}
                 actions={[
                     <b key="like">
                         {likes} <Icon type="heart" onClick={this._onClickLike} />

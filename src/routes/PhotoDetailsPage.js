@@ -4,8 +4,8 @@ import { Comment, Avatar } from "antd";
 import moment from "moment";
 import { Col, Row, Spin } from "antd";
 import Photo from "../components/Photo";
-import CommentList from "../components/ComentList";
-import CommentForm from "../components/ComentForm";
+import CommentList from "../components/CommentList";
+import CommentForm from "../components/CommentForm";
 import mockPosts from "../utils/mockPosts";
 import base from "../utils/rebase";
 import { addComent, likeIncrement } from "../utils/rebaseUtils";
@@ -71,7 +71,11 @@ export default class PhotoDetailsPage extends PureComponent {
     _renderCommentList = (post) => {
         const { comments } = post;
 
-        return Array.isArray(comments) && comments.length > 0 && <CommentList comments={comments} />;
+        if (Array.isArray(comments) && comments.length > 0) {
+            return (<CommentList comments={comments} />);
+        }
+
+        return null;
     };
 
     render() {

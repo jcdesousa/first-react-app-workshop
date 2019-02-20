@@ -12,7 +12,7 @@ const propTypes = {
 
 function CommentForm({ onChange, onSubmit, value }) {
     return (
-        <div>
+        <>
             <Form.Item>
                 <TextArea rows={4} onChange={onChange} value={value} />
             </Form.Item>
@@ -22,10 +22,10 @@ function CommentForm({ onChange, onSubmit, value }) {
                     onClick={onSubmit}
                     type="primary"
                 >
-            Add Comment
+                    Add Comment
                 </Button>
             </Form.Item>
-        </div>
+        </>
     );
 }
 
