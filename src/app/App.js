@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Route, Switch, BrowserRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import PhotoDetailsPage from "../routes/PhotoDetailsPage";
 import PhotoFeedPage from "../routes/PhotoFeedPage";
 import NotFound from "../routes/NotFound";
@@ -8,13 +9,15 @@ import "./App.css";
 class App extends Component {
     render() {
         return (
-            <div className="App">
-                <header className="App-header">
-                    <a className="App-link" href="/#">ZAIstagram</a>
-                </header>
+            <BrowserRouter>
+                <div className="App">
+                    <header className="App-header">
+                        <Link to="/" className="App-link">
+                            ZAIstagram
+                        </Link>
+                    </header>
 
-                <div className="App-body">
-                    <BrowserRouter>
+                    <div className="App-body">
                         <Switch>
                             <Route
                                 path="/"
@@ -27,9 +30,9 @@ class App extends Component {
                             />
                             <Route component={NotFound} />
                         </Switch>
-                    </BrowserRouter>
+                    </div>
                 </div>
-            </div>
+            </BrowserRouter>
         );
     }
 }
