@@ -25,10 +25,5 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ],
-  "devDependencies": {
-    "@feedzai/eslint-config-feedzai-react": "^3.0.1",
-    "eslint-plugin-jest": "^22.0.1",
-    "babel-eslint": "9.0.0"
-  }
+  ]
 }
